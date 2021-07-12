@@ -36,7 +36,7 @@ i {
   position: fixed;
   width: 100%;
   z-index: 0;
-  height: 10px;
+  background-color: transparent;
 }
 #gitlink {
   float: right;
