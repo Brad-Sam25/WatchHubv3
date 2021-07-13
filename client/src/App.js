@@ -6,6 +6,7 @@ import Login from './components/Login'
 import 'bulma/css/bulma.min.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 
+
 function App() {
   return (
     <Router>
