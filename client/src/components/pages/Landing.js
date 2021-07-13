@@ -2,7 +2,7 @@ import React from "react"
 export default function Landing() {
     return (
         <div>
-                <section id="emptyhero" class="hero">
+          <section id="emptyhero" class="hero">
           <div class="hero-body">
             <div class=""></div>
           </div>
@@ -13,7 +13,7 @@ export default function Landing() {
               <div class="tile is-ancestor">
                 <div class="tile is-vertical">
                   <div class="tile">
-                    <div class="tile is-parent is-vertical has-text-centered">
+                    <Tile kind="parent" vertical>
                       <article
                         id="querybox"
                         class="tile is-child notification is-link"
