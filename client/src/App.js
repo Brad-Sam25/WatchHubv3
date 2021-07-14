@@ -8,6 +8,8 @@ import Stats from './components/Stats'
 import 'bulma/css/bulma.min.css';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import Related from './components/Related';
+import CommentBox from './components/CommentBox';
+
 
 
 function App() {
@@ -16,10 +18,8 @@ function App() {
       <div>
         <NavBar />
         {/* <Route exact path="/" component={Login} /> */}
-        <Search />
-        <Related />
-        <Stats />
         <Landing />
+        <CommentBox />
         <Footer />
       </div>
     </Router>
