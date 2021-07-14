@@ -2,8 +2,6 @@ import React from "react";
 
 function Signup() {
     return (
-
-
         <div class="login">
             <h1>Sign up</h1>
             <form class="signup">

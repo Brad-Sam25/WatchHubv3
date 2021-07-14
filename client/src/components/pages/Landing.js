@@ -1,4 +1,5 @@
 import React from "react"
+import Search from "../Search.js"
 export default function Landing() {
     return (
         <div>
@@ -13,31 +14,8 @@ export default function Landing() {
               <div class="tile is-ancestor">
                 <div class="tile is-vertical">
                   <div class="tile">
-                    <Tile kind="parent" vertical>
-                      <article
-                        id="querybox"
-                        class="tile is-child notification is-link"
-                      >
-                        <div class="columns is-centered">
-                          <div class="column is-8">
-                            <label class="label">Title Search</label>
-                            <div class="control">
-                              <input
-                                id="userQuery"
-                                class="input"
-                                type="text"
-                                placeholder="Search for your title here!"
-                                list="searchinfo"
-                              />
-                            </div>
-                            <br />
-                            <button id="searchBtn" class="button">
-                              Search
-                            </button>
-                            <datalist id="searchinfo"></datalist>
-                          </div>
-                        </div>
-                      </article>
+                    <div class="tile is-parent is-vertical has-text-centered">
+                      {/* {Search} */}
                       <article
                         id="related"
                         class="tile is-child notification is-link"
