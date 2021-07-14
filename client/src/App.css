@@ -3,6 +3,10 @@ form.signup,
 form.login {
   margin-top: 50px;
 }
+
+#box {
+	background-color: transparent;
+}
 /* html {
 	width: 100%;
 	height:100%;
@@ -33,7 +37,7 @@ i {
 }
 #headerRow {
   background-color: #0aa2a7;
-  position: fixed;
+  position: relative;
   width: 100%;
   z-index: 0;
   background-color: transparent;
