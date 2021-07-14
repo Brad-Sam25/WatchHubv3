@@ -1,4 +1,4 @@
-import "bulma/css/bulma.min.css"
+
 import { Tile } from 'react-bulma-components';
 
 function Stats() {
