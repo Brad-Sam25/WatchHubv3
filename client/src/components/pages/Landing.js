@@ -1,97 +1,74 @@
-import React from "react"
-import Search from "../Search.js"
-export default function Landing() {
+import React, { Component } from 'react';
+import Stats from '../Stats';
+import Poster from '../Poster';
+import Search from '../Search';
+import Related from '../Related';
+import API from '../utils/API';
+
+class Landing extends Component {
+  state = {
+    result: {},
+    search: ""
+  };
+
+  // When this component mounts, search for the movie "The Matrix"
+  componentDidMount() {
+    this.searchMovies("");
+  }
+
+  searchMovies = query => {
+    API.search(query)
+      .then(res => this.setState({ result: res.data }))
+      .catch(err => console.log(err));
+  };
+
+  handleInputChange = event => {
+    const value = event.target.value;
+    const name = event.target.name;
+    this.setState({
+      [name]: value
+    });
+  };
+
+  // When the form is submitted, search the OMDB API for the value of `this.state.search`
+  handleFormSubmit = event => {
+    event.preventDefault();
+    this.searchMovies(this.state.search);
+  };
+
+  render() {
     return (
-        <div>
-          <section id="emptyhero" class="hero">
-          <div class="hero-body">
-            <div class=""></div>
-          </div>
-        </section>
-        <div class="hero has-text-centered">
-          <div id="search" class="hero-body">
-            <div id="container">
-              <div class="tile is-ancestor">
-                <div class="tile is-vertical">
-                  <div class="tile">
-                    <div class="tile is-parent is-vertical has-text-centered">
-                      {/* {Search} */}
-                      <article
-                        id="related"
-                        class="tile is-child notification is-link"
-                      >
-                        <p class="title">Related Searches</p>
-                        <p class="subtitle">Titles related to your search</p>
-                        <div class="columns">
-                          <div id="relatedsearch" class="column"></div>
-                          <div id="relatedsearch2" class="column"></div>
-                          <div id="relatedsearch3" class="column"></div>
-                        </div>
-                      </article>
-                    </div>
-                    <div id="poster" class="tile is-parent">
-                      <article class="tile is-child notification is-link">
-                        <figure id="result" class="image is-10by13"></figure>
-                      </article>
-                    </div>
-                  </div>
-                  <div id="streaming" class="tile is-parent">
-                    <article class="tile is-child notification is-link">
-                      <div id="streaming-section" class="content is-centered">
-                        <nav class="columns is-centered is-vcentered">
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Critic Score</p>
-                              <p class="title" id="critic-score"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Ratings</p>
-                              <p class="title" id="rating"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Runtime</p>
-                              <p class="title" id="run-time"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column is-vcentered">
-                              <p class="heading">Release Date</p>
-                              <p class="title" id="release-date"></p>
-                            </div>
-                          </div>
-                        </nav>
-                      </div>
-                    </article>
-                  </div>
-                </div>
-                <div id="stats" class="tile is-parent">
-                  <article class="tile is-child notification is-link">
-                    <div class="content">
-                      <h1 id="movietitle" class="title has-text-white"></h1>
-                      <h4 id="titleyear"></h4>
-                      <h4 id="actors" class="is-family-monospace"></h4>
-                      <p
-                        id="description"
-                        class="subtitle has-text-weight-semibold"
-                      ></p>
-                      <div id="trailerBox">
-                      
-                      </div>
-                      <div class="content">
-                        {/* <!-- Content --> */}
-                      </div>
-                    </div>
-                  </article>
-                </div>
-              </div>
-              <div id="result"></div>
-            </div>
-          </div>
-        </div>
-    </div>
-    )
+      <Container>
+        <Row>
+        <Col size="md-4">
+            <Card heading="Search">
+              <Search
+                value={this.state.search}
+                handleInputChange={this.handleInputChange}
+                handleFormSubmit={this.handleFormSubmit}
+              />
+            </Card>
+          </Col>
+          <Col size="md-8">
+            <Card
+              heading={this.state.result.Title || "Search for a Movie to Begin"}
+            >
+              {this.state.result.Title ? (
+                <Stats
+                  runtime={this.state.result.Runtime}
+                  releaseDate={this.state.result.Release}
+                  criticScore={this.state.result.Score}
+                  usRating={this.state.result.Rating}
+                />
+              ) : (
+                <h3>No Results to Display</h3>
+              )}
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    );
+  }
 }
+
+export default Landing;
