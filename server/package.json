@@ -14,7 +14,9 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server-express": "^2.25.2",
+    "bulma": "^0.9.3",
     "express": "^4.17.1",
-    "mongoose": "^5.13.2"
+    "mongoose": "^5.13.2",
+    "react-bulma-components": "^4.0.7"
   }
 }
