@@ -1,5 +1,4 @@
 import {Tile} from 'react-bulma-components';
-import "bulma/css/bulma.min.css"
 function Search() {
     return (
         
