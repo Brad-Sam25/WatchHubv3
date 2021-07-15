@@ -26,12 +26,9 @@
     "concurrently": "^6.2.0"
   },
   "dependencies": {
-<<<<<<< HEAD
     "bcrypt": "^5.0.1",
     "dotenv": "^10.0.0",
-    "graphql": "^15.5.1"
-=======
+    "graphql": "^15.5.1",
     "express": "^4.17.1"
->>>>>>> 041bb3c47aa0928ff8945d3d0be52ecf101c9fff
   }
 }

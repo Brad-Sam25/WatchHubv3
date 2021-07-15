@@ -21,8 +21,8 @@ const profileSchema = new Schema({
     },
     favorites: [
         {
-        type: String,
-        trim: true,
+        type: Schema.Types.ObjectId,
+        ref: 'Favorite'
         },
     ],
     posts: [
