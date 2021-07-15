@@ -1,5 +1,5 @@
 import {Tile} from 'react-bulma-components';
-function Search() {
+function Search(props) {
     return (
         
             <Tile
@@ -20,6 +20,9 @@ function Search() {
                                     type="text"
                                     placeholder="Search for your title here!"
                                     list="searchinfo"
+                                    onChange={props.handleInputChange}
+                                    value={props.value}
+                                    name="search"
                                 />
                             </div>
                         
