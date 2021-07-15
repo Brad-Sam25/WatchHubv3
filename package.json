@@ -24,5 +24,8 @@
   "homepage": "https://github.com/Brad-Sam25/WatchHubv3#readme",
   "devDependencies": {
     "concurrently": "^6.2.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
   }
 }
