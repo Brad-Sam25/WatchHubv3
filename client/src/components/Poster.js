@@ -7,8 +7,8 @@ function Poster () {
             <Heading>Wide tile</Heading>
             <Heading subtitle>Aligned with the right tile</Heading>
             <div className="content">
-                <article class="tile is-child notification is-link">
-                    <figure id="result" class="image is-10by13"></figure>
+                <article className="tile is-child notification is-link">
+                    <figure id="result" className="image is-10by13"></figure>
                 </article>
             </div>
         </Tile>

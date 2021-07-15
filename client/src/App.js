@@ -43,7 +43,7 @@ function App() {
           <div>
             {/* <NavBar /> */}
             <Route exact path="/" component={Login} />
-            <Route exact path="/home" component={NavBar} />
+            <Route exact path="/home" component={Landing} />
             <Route exact path="/signup" component={Signup} />
             {/* <Stats />
             <Landing />

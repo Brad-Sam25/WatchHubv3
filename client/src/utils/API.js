@@ -8,3 +8,10 @@ export default {
         return axios.get(`${OMDB}${query}${OMDBKEY}`)
     },
 };
+
+
+
+// export default {
+//     search(query) {
+//         return axios.get()
+// }
