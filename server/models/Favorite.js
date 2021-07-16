@@ -1,45 +1,18 @@
 const { Schema, model } = require('mongoose');
-const dateFormat = require('../utils/dateFormat');
 
 const favoriteSchema = new Schema({
-    postText: {
-        type: String,
-        required: 'You need to leave a thought!',
-        minlength: 1,
-        maxlength: 280,
-        trim: true,
+    profileFrom: {
+        type: Schema.Types.ObjectId,
+        ref: 'Profile'
     },
-    postAuthor: {
-        type: String,
-        required: true,
-        trim: true,
+    movieId : {
+        type: String
     },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
+    movieTitle: {
+        type: String
     },
-    comments: [
-        {
-        commentText: {
-            type: String,
-            required: true,
-            minlength: 1,
-            maxlength: 280,
-        },
-        commentAuthor: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: (timestamp) => dateFormat(timestamp),
-        },
-        },
-    ],
 });
 
-const Post = model('Post', postSchema);
+const Favorite = model('Favorite', favoriteSchema);
 
-module.exports = Post;
+module.exports = Favorite;

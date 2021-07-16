@@ -153,6 +153,25 @@ class Landing extends Component{
                           <div class="content">
                           </div>
                         </div>
+<<<<<<< HEAD
+                      </div>
+                    </nav>
+                  </div>
+                  <div className="content" />
+                </Tile>
+              </Tile>
+            </Tile>
+            <Tile kind="parent">
+              <Stats 
+                title={this.state.result.Title}
+              />
+            </Tile>
+          </Tile>
+        </Box>
+      </Section>
+    </div>
+  )}
+=======
                       </article>
                       <div className="content" />
                     </div>
@@ -166,3 +185,4 @@ class Landing extends Component{
     }
 
 export default Landing;
+>>>>>>> bc314e7f3939988a0f3ddd7453d5fa65e3e6e6cb

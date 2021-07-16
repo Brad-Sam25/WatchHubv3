@@ -5,6 +5,8 @@ import App from './App';
 import 'bulma/css/bulma.min.css';
 require('dotenv').config()
 
+require('dotenv').config()
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

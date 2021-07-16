@@ -33,8 +33,8 @@ function Search(props) {
                     </div>
                 </div>
             </div>
-            </Tile>
-            )
+        </Tile>
+    )
 }
 
 export default Search;
