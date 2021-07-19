@@ -1,36 +1,17 @@
-# MERN Stack Movie-App
+# WatchHubv3 #
 
-## Description
-A movie app made using the MERN stack
-- Secure login and registration using the PassportJS JWT strategy; passwords are hashed using bcrypt
-- Explore the most popular movies, upcoming unreleased movies, now playing movies in theatres
-- Search any movie and read plot summaries
-- Favourite the best movies and keep track of them
-- Read and write reviews from other users
+## What it is: ##
+
+Our application is a clean, streamlined search engine for tv show and movie information including featured actors, release date, critic score, plot, related titles, and trailer video based on user input.
+The application utilizes Node.js and Express.js to create a RESTful API, it usesMySQL and Sequelize ORM, and also incorperates user signup and login features.
+
+## How to use: ##
+
+To initialize our application, in command line, the user may run
+
+node index.html
 
 
-## Demo
+Then, the user can access the application by entering localhost:8080 into their browswer searchbar. This will bring up the user login page. If the user does not have an existing registered username, they can create one by following the prompted link. Once the user is logged in, they can then enter the title of their favorite tv show or movie to access corresponding information via our backend API calls.
 
-### Login Demo
-Used the Passportjs JWT strategy for authentication
-![Login Demo](demo/login.gif)
-
-### Registration Demo
-![Registration Demo](demo/registration.gif)
-
-### Error Checking Demo
-![Error Checking Demo](demo/error-check.gif)
-
-### Movie Exploration Demo
-Movie data is from the [MovieDB API](https://developers.themoviedb.org/3)
-![Movie Exploration Demo](demo/movie-explore.gif)
-
-### Favouriting Demo
-![Favouriting Demo](demo/favourite.gif)
-
-### Review Demo
-![Review Demo](demo/reviews.gif)
-
-### How To Deploy?
-Create a .env file in the backend folder and add your own MongoDB key which links to your own MongoDB database.
-Also create and add a secret key to the .env file used for password hashing by bcrypt. 
+## Demo: ##
