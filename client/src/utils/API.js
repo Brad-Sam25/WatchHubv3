@@ -3,16 +3,13 @@ import axios from 'axios';
 const OMDB  = process.env.BASE_OMDB;
 const PLOT = process.env.PLOT_OMDB;
 const OMDBKEY = process.env.APIKEY_OMDB;
-const OMDB = process.env.OMDB_BASE_URL;
-const OMDBKEY = process.env.API_KEY_OMDB;
-const PLOT = process.env.PLOT_OMDB;
 const WATCHMODE = process.env.BASE_WATCHMODE;
 const WMKEY = process.env.APIKEY_WATCHMODE;
 const TMDB = process.env.BASE_TMDB;
 const TMDBKEY = process.env.APIKEY_TMDB;
 
 export const saveMovie = (movieData, token) => {
-    return fetch('/api/profile', {
+  return fetch('/api/profile', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -23,18 +20,14 @@ export const saveMovie = (movieData, token) => {
   };
   
   // remove saved book data for a logged in user
-  export const deleteBook = (movieId, token) => {
-    return fetch(`/api/profile/favorites/${movieId}`, {
+  export const deleteMovie = (movieId, token) => {
+    return fetch(`/api/user/favorites/${movieId}`, {
       method: 'DELETE',
       headers: {
         authorization: `Bearer ${token}`,
       },
     });
   };
-
-export default {
-    search(query) {
-        axios.get(`${OMDB}${query}${OMDBKEY}`)
 
 export default {
     search(query) {

@@ -1,188 +1,150 @@
-import React, { Component, useState } from "react"
-import {Tile} from 'react-bulma-components';
-import {Box} from 'react-bulma-components';
-import {Section} from 'react-bulma-components';
-import API from '../../utils/API'
+import React, { useState, useEffect } from 'react';
+import { Jumbotron, Container, Col, Form, Button, Card, CardColumns } from 'react-bootstrap';
 
-class Landing extends Component{
-    state = {
-      result: {},
-      search: ""
-    };
-  
-    // When this component mounts, search for the movie "The Matrix"
-    componentDidMount() {
-      this.searchMovies("The Matrix");
-    }
-  
-    searchMovies = query => {
-      API.search(query)
-        .then(res => this.setState({ result: res.data }))
-        .catch(err => console.log(err));
-    };
-  
-    handleInputChange = event => {
-      const value = event.target.value;
-      const name = event.target.name;
-      this.setState({
-        [name]: value
-      });
-    };
-  
-    // When the form is submitted, search the OMDB API for the value of `this.state.search`
-    handleFormSubmit = event => {
-      event.preventDefault();
-      this.searchMovies(this.state.search);
-    };
-    render() {
-      return (
-        <div>
-          <Section>
-            <Box id="box">
-              <Tile kind="ancestor">
-                <Tile size={8} vertical>
-                  <Tile>
-                    <Tile kind="parent" vertical>
-                      <Tile
-                        renderAs="article"
-                        kind="child"
-                        notification
-                        color="primary"
-                        id="querybox"
-                      >
-                        <div class="columns is-centered">
-                          <div class="column is-8">
-                            <label class="label">Title Search</label>
-                            <div class="control">
-                              <input
-                                id="userQuery"
-                                class="input"
-                                type="text"
-                                placeholder="Search for your title here!"
-                                list="searchinfo"
-                                value={this.state.search}
-                                handleInputChange={this.handleInputChange}
-                                handleFormSubmit={this.handleFormSubmit}
-                              />
-                            </div>
-                            <br />
-                            <button id="searchBtn" class="button">
-                              Search
-                            </button>
-                            <datalist id="searchinfo"></datalist>
-                          </div>
-                        </div>
-                      </Tile>
-                      <Tile
-                        renderAs="article"
-                        kind="child"
-                        notification
-                        color="is-link"
-                        id="related"
-                      >
-                        <p class="title">Related Searches</p>
-                        <p class="subtitle">Titles related to your search</p>
-                        <div class="columns">
-                          <div id="relatedsearch" class="column"></div>
-                          <div id="relatedsearch2" class="column"></div>
-                          <div id="relatedsearch3" class="column"></div>
-                        </div>
-                      </Tile>
-                    </Tile>
-                    <Tile kind="parent">
-                      <Tile renderAs="article"
-                        kind="child"
-                        notification
-                        color="info"
-                        id="poster">
-                        <article class="tile is-child notification is-link">
-                          <figure id="result" class="image is-10by13"></figure>
-                        </article>
-                      </Tile>
-                    </Tile>
-                  </Tile>
-                  <Tile kind="parent">
-                    <Tile renderAs="article" kind="child" notification color="danger" id="streaming">
-                      <div id="streaming-section" class="content is-centered">
-                        <nav class="columns is-centered is-vcentered">
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Critic Score</p>
-                              <p class="title" id="critic-score"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Ratings</p>
-                              <p class="title" id="rating"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column">
-                              <p class="heading">Runtime</p>
-                              <p class="title" id="run-time"></p>
-                            </div>
-                          </div>
-                          <div class="level-item has-text-centered">
-                            <div class="column is-vcentered">
-                              <p class="heading">Release Date</p>
-                              <p class="title" id="release-date"></p>
-                            </div>
-                          </div>
-                        </nav>
-                      </div>
-                      <div className="content" />
-                    </Tile>
-                  </Tile>
-                </Tile>
-                <Tile kind="parent">
-                  <Tile renderAs="article" kind="child" notification color="success" id="stats">
-                    <div className="content">
-                    <article class="tile is-child notification is-link">
-                        <div class="content">
-                          <h1 id="movietitle" class="title has-text-white"></h1>
-                          <h4 id="titleyear"></h4>
-                          <h4 id="actors" class="is-family-monospace"></h4>
-                          <p
-                            id="description"
-                            class="subtitle has-text-weight-semibold"
-                          ></p>
-                          <div id="trailerBox">
-                          
-                          </div>
-                          <div class="content">
-                          </div>
-                        </div>
-<<<<<<< HEAD
-                      </div>
-                    </nav>
-                  </div>
-                  <div className="content" />
-                </Tile>
-              </Tile>
-            </Tile>
-            <Tile kind="parent">
-              <Stats 
-                title={this.state.result.Title}
-              />
-            </Tile>
-          </Tile>
-        </Box>
-      </Section>
-    </div>
-  )}
-=======
-                      </article>
-                      <div className="content" />
-                    </div>
-                  </Tile>
-                </Tile>
-              </Tile>
-            </Box>
-          </Section>
-        </div>
-      )}
+import Auth from '../../utils/auth';
+import API from '../../utils/API';
+import { saveMovieIds, getSavedMovieIds } from '../utils/localStorage';
+
+import { SAVE_MOVIE } from '../../utils/mutations';
+import { useMutation } from '@apollo/react-hooks'
+
+const SearchMovies = () => {
+  // create state for holding returned google api data
+  const [searchedMovies, setSearchedMovies] = useState([]);
+  // create state for holding our search field data
+  const [searchInput, setSearchInput] = useState('');
+
+  // create state to hold saved bookId values
+  const [savedMovieIds, setSavedMovieIds] = useState(getSavedMovieIds());
+  const [saveMovie, {error}] = useMutation(SAVE_MOVIE);
+
+  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+  // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
+  useEffect(() => {
+    return () => saveMovieIds(savedMovieIds);
+  });
+
+  // create method to search for books and set state on form submit
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!searchInput) {
+      return false;
     }
 
-export default Landing;
->>>>>>> bc314e7f3939988a0f3ddd7453d5fa65e3e6e6cb
+    try {
+      const response = await searchTMDB(searchInput);
+
+      if (!response.ok) {
+        throw new Error('something went wrong!');
+      }
+
+      const { items } = await response.json();
+
+      const movieData = items.map((movie) => ({
+        movieId: movie.id,
+        authors: movie.volumeInfo.authors || ['No author to display'],
+        title: movie.volumeInfo.title,
+        description: movie.volumeInfo.description,
+        image: movie.volumeInfo.imageLinks?.thumbnail || '',
+      }));
+
+      setSearchedMovies(movieData);
+      setSearchInput('');
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // create function to handle saving a book to our database
+  const handleSaveMovie = async (movieId) => {
+    // find the book in `searchedBooks` state by the matching id
+    const movieToSave = searchedMovies.find((movie) => movie.movieId === movieId);
+
+
+    const token = Auth.loggedIn() ? Auth.getToken() : null;
+    console.log('token: ', token)
+
+    if (!token) {
+      return false;
+    }
+
+    try {
+      // const response = await saveBook(bookToSave, token);
+      await saveMovie({
+          variables: { input: bookToSave }
+      })
+
+      // if book successfully saves to user's account, save book id to state
+      setSavedMovieIds([...savedMovieIds, movieToSave.movieId]);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  return (
+    <>
+      <Jumbotron fluid className='text-light bg-dark'>
+        <Container>
+          <h1>Search for a Movie!</h1>
+          <Form onSubmit={handleFormSubmit}>
+            <Form.Row>
+              <Col xs={12} md={8}>
+                <Form.Control
+                  name='searchInput'
+                  value={searchInput}
+                  onChange={(e) => setSearchInput(e.target.value)}
+                  type='text'
+                  size='lg'
+                  placeholder='Search for a book'
+                />
+              </Col>
+              <Col xs={12} md={4}>
+                <Button type='submit' variant='success' size='lg'>
+                  Submit Search
+                </Button>
+              </Col>
+            </Form.Row>
+          </Form>
+        </Container>
+      </Jumbotron>
+
+      <Container>
+        <h2>
+          {searchedBooks.length
+            ? `Viewing ${searchedBooks.length} results:`
+            : 'Search for a book to begin'}
+        </h2>
+        <CardColumns>
+          {searchedMovies.map((movie) => {
+            return (
+              <Card key={movie.movieId} border='dark'>
+                {movie.image ? (
+                  <Card.Img src={movie.image} alt={`The cover for ${movie.title}`} variant='top' />
+                ) : null}
+                <Card.Body>
+                  <Card.Title>{movie.title}</Card.Title>
+                  <p className='small'>Starring: {movie.actors}</p>
+                  <Card.Text>{movie.description}</Card.Text>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedMovieIds?.some((savedMovieId) => savedMovieId === movie.movieId)}
+                      className='btn-block btn-info'
+                      onClick={() => handleSaveMovie(movie.movieId)}>
+                      {savedMovieIds?.some((savedMovieId) => savedMovieId === movie.movieId)
+                        ? 'This movie has been added to your favorites!'
+                        : 'Save this movie to your favorites!'}
+                    </Button>
+                  )}
+                </Card.Body>
+                {error && <div>An error has occurred...</div>}
+              </Card>
+            );
+          })}
+        </CardColumns>
+      </Container>
+    </>
+  );
+};
+
+export default SearchMovies;

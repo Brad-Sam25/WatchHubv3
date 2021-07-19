@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const OMDB = process.env.OMDB_BASE_URL;
-const OMDBKEY = process.env.API_KEY_OMDB;
+const OMDB = process.env.BASE_OMDB;
+const OMDBKEY = process.env.APIKEY_OMDB;
 const PLOT = process.env.PLOT_OMDB;
 const WATCHMODE = process.env.BASE_WATCHMODE;
 const WMKEY = process.env.APIKEY_WATCHMODE;

@@ -87,7 +87,7 @@ class CommentForm extends React.Component {
           <textarea placeholder="Comment" rows="4" required ref={(textarea) => this._body = textarea}></textarea>
         </div>
         <div className="comment-form-actions">
-          <button type="submit">Post Comment</button>
+          <button type="submit"> Comment</button>
         </div>
       </form>
     );

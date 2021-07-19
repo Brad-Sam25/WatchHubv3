@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect(
-  process.env.MONGODB_URI || 'mongodb://localhost/favorites',
+  process.env.MONGODB_URI || 'mongodb://localhost/WatchHub',
   {
     useNewUrlParser: true,
     useUnifiedTopology: true,
