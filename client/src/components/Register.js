@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import '../App.css';
+import './style.css';
 import Axios from 'axios';
-// import ErrorModal from '../components/error-modal.component';
 
 export default function Register() {
     const [username, setUsername] = useState();

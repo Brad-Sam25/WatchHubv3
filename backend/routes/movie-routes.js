@@ -1,7 +1,7 @@
 const router = require('express').Router();
-let User = require('../models/user.model');
-let Movie = require('../models/movie.model');
-let Review = require('../models/review.model');
+let User = require('../models/user');
+let Movie = require('../models/movie');
+let Review = require('../models/review');
 const axios = require('axios');
 
 
@@ -16,8 +16,7 @@ router.get('/getUserId', async (req, res) => {
 
 router.post('/get_search', async (req, res) => {
   const searchItem = req.body.movieTitle;
-  const pageNumber=req.body.pageNumber;
-  const apiRes = await axios.get('https://api.themoviedb.org/3/search/movie?api_key=' + process.env.MOVIE_API_KEY + '&query=' + searchItem+'&page='+pageNumber)
+  const apiRes = await axios.get(`${process.env.MOVIE_BASE_URL}search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${searchItem}`)
     .then(res => { return res });
 
   return res.json(apiRes.data.results);
@@ -28,9 +27,8 @@ router.post('/get_search', async (req, res) => {
 
 
 router.post('/get_popular_movies', async (req, res) => {
-  let {pageNumber}=req.body;
  
-  const apiRes = await axios.get('https://api.themoviedb.org/3/discover/movie?api_key=' + process.env.MOVIE_API_KEY + '&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page='+pageNumber)
+  const apiRes = await axios.get(`${process.env.MOVIE_BASE_URL}discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc`)
     .then(res => { return res });
 
   return res.json(apiRes.data.results);
@@ -45,11 +43,6 @@ router.get('/favorites', async (req, res) => {
 router.post('/add', async (req, res) => {
   let { title, movieId,description,posterPath } = req.body;
 
-
-  // const isTaken = await Movie.findOne({ movieId: movieId, userId: req.user._id });
-  // if (isTaken) {
-  //   return res.status(400).json({ Error: "Movie already added" });
-  // }
   const newMovie = new Movie({
     title,
     movieId,

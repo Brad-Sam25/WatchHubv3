@@ -2,11 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../App.css';
 import Axios from 'axios';
 import MovieModal from './MovieDetails';
-import '../components/component.css';
-
-
-import { Button, Col, Row } from 'react-bootstrap';
-
+import '../components/style.css';
 
 export default function MovieApp(props) {
     const [movies, setMovies] = useState([]);
@@ -14,11 +10,7 @@ export default function MovieApp(props) {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
-    /*
-    "POPULAR"-popular movies
-    "SEARCH"-searched movies by user
-    "IN_THEATRES"-movies currently in theatre
-    */
+   
     const [movieApiSource, setMovieApiSource] = useState("POPULAR");
     useEffect(() => {
 
@@ -69,44 +61,6 @@ export default function MovieApp(props) {
             setMovies(res.data);
         });
     }
-    const readNowPlayingMovies = async (pageNumber) => {
-        setMovieApiSource("IN_THEATRES");
-        setPageNumber(pageNumber);
-        await Axios({
-            method: 'post',
-            url: 'http://localhost:5000/api/protected/get_now_playing',
-            headers: {
-                'Authorization': localStorage.getItem('jwt'),
-            },
-            data: {
-                pageNumber
-            }
-
-        }).then(res => {
-
-            setMovies(res.data);
-        });
-    }
-
-    const readUpcomingMovies = async (pageNumber) => {
-        setMovieApiSource("UPCOMING");
-        setPageNumber(pageNumber);
-        await Axios({
-            method: 'post',
-            url: 'http://localhost:5000/api/protected/get_upcoming',
-            headers: {
-                'Authorization': localStorage.getItem('jwt'),
-            },
-            data: {
-                pageNumber
-            }
-
-        }).then(res => {
-
-            setMovies(res.data);
-        });
-    }
-
 
     const onSubmit = async (e) => {
         console.log("onSubmit")
@@ -117,7 +71,6 @@ export default function MovieApp(props) {
         try {
             console.log("try")
             e.preventDefault();
-            // e.target.reset();
             setMovieTitle("")
 
             searchMovie(1);
@@ -142,7 +95,6 @@ export default function MovieApp(props) {
         }).then(res => {
             console.log("res", res.data)
             setMovies(res.data);
-            // setMovieTitle("");
         });
 
     }
