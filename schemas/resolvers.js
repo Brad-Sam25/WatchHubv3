@@ -8,11 +8,11 @@ const resolvers = {
             return Profile.find().populate('posts');
         },
         profile: async (parent, { name }) => {
-            return Profile.findOne({ name }).populate('thoughts');
+            return Profile.findOne({ name }).populate('posts');
         },
         posts: async (parent, { name }) => {
             const params = name ? { name } : {};
-            return Thought.find(params).sort({ createdAt: -1 });
+            return Post.find(params).sort({ createdAt: -1 });
         },
         post: async (parent, { postId }) => {
             return Post.findOne({ _id: postId });
