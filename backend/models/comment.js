@@ -2,7 +2,7 @@ const mongoose=require('mongoose');
 
 const Schema=mongoose.Schema;
 
-const reviewSchema=new Schema({
+const commentSchema=new Schema({
    
    username:{
         type:String,
@@ -19,7 +19,7 @@ const reviewSchema=new Schema({
         required:true,
         trim:true,
     },
-    review:{
+    comment:{
         type:String,
         required:true,
         trim:true,
@@ -33,5 +33,5 @@ const reviewSchema=new Schema({
 
 });
 
-const Review =mongoose.model('Review',reviewSchema);
-module.exports=Review;
+const Comment = mongoose.model('Comment', commentSchema);
+module.exports = Comment;

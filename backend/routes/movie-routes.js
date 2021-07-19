@@ -1,17 +1,13 @@
 const router = require('express').Router();
 let User = require('../models/user');
 let Movie = require('../models/movie');
-let Review = require('../models/review');
+let Comment = require('../models/comment');
 const axios = require('axios');
 
 
-
 router.get('/getUserId', async (req, res) => {
-
   return res.json(req.user._id);
-
 });
-
 
 
 router.post('/get_search', async (req, res) => {
@@ -21,7 +17,6 @@ router.post('/get_search', async (req, res) => {
 
   return res.json(apiRes.data.results);
 });
-
 
 router.post('/get_popular_movies', async (req, res) => {
 
@@ -74,47 +69,44 @@ router.post('/isFavoriteFound', async (req, res) => {
 });
 
 
-router.get('/reviews', async (req, res) => {
-  const reviews = await Review.find({});
-  return res.json(reviews);
+router.get('/comments', async (req, res) => {
+  const comments = await Comment.find({});
+  return res.json(comments);
 });
 
-router.post('/addReview', async (req, res) => {
-  let { movieId, review } = req.body;
+router.post('/addComment', async (req, res) => {
+  let { movieId, comment } = req.body;
 
-  if (review.length <= 0) {
-    return res.status(400).json({ Error: "Empty review" });
+  if (comment.length <= 0) {
+    return res.status(400).json({ Error: "Please leave a comment" });
   }
   let date = new Date().toJSON().slice(0, 10);
 
-  const newReview = new Review({
+  const newComment = new Comment({
     username: req.user.username,
     userId: req.user._id,
     movieId,
-    review,
+    comment,
     date
   });
-  newReview.save()
-    .then(review => res.json(review))
+  newComment.save()
+    .then(comment => res.json(comment))
     .catch(err => res.status(400).json({ Error: err }));
 });
 
-router.delete('/delete_review/:id', async (req, res) => {
-  const reviewToDelete = await Review.findOne({ _id: req.params.id });
+router.delete('/delete_comment/:id', async (req, res) => {
+  const commentToDelete = await Comment.findOne({ _id: req.params.id });
 
-  if (!reviewToDelete) {
-    return res.status(400).json({ Error: "review not found" });
+  if (!commentToDelete) {
+    return res.status(400).json({ Error: "Comment not found" });
   }
-  const deletedReview = await Review.findByIdAndDelete(reviewToDelete._id);
-  const reviews = await Review.find({});
-  return res.json(reviews);
+  const deletedComment = await Comment.findByIdAndDelete(commentToDelete._id);
+  const comments = await Comment.find({});
+  return res.json(comments);
 });
 
 router.post('/test', async (req, res) => {
   res.json(req.user._id);
 });
-
-
-
 
 module.exports = router;

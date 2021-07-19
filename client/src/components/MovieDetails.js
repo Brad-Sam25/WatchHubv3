@@ -8,8 +8,8 @@ import { Modal, Button, Card, Form } from 'react-bootstrap';
 import Axios from 'axios';
 export default function MovieModal(props) {
   const [isFavoriteMovieFound, setFavoriteMovie] = useState();
-  const [reviews, setReviews] = useState([]);
-  const [userReview, setUserReview] = useState("");
+  const [comments, setComments] = useState([]);
+  const [userComment, setUserComment] = useState("");
   const [userId, setUserId] = useState();
 
   useEffect(() => {
@@ -42,29 +42,21 @@ export default function MovieModal(props) {
 
     const ac = new AbortController();
 
-    const getReviews = async () => {
+    const getComments = async () => {
       await Axios({
         method: 'get',
-        url: 'http://localhost:5000/api/protected/reviews',
+        url: 'http://localhost:5000/api/protected/comments',
         headers: {
           'Authorization': localStorage.getItem('jwt'),
-
-
         }
 
-
       }).then(res => {
-        var temporaryReviewsArray = [];
-        temporaryReviewsArray = res.data;
-
-        setReviews(temporaryReviewsArray.reverse());
+        var temporaryCommentsArray = [];
+        temporaryCommentsArray = res.data;
+        setComments(temporaryCommentsArray.reverse());
       });
-
-
     }
-
-
-    getReviews();
+    getComments();
 
     const getUserId = async () => {
       await Axios({
@@ -72,20 +64,11 @@ export default function MovieModal(props) {
         url: 'http://localhost:5000/api/protected/getUserId',
         headers: {
           'Authorization': localStorage.getItem('jwt'),
-
-
         }
-
-
       }).then(res => {
-
         setUserId(res.data);
       });
-
-
     }
-
-
     getUserId();
 
     return () => ac.abort();
@@ -145,43 +128,43 @@ export default function MovieModal(props) {
     });
   }
 
-  const deleteReview = async (id) => {
+  const deleteComment = async (id) => {
     await Axios({
       method: 'delete',
-      url: 'http://localhost:5000/api/protected/delete_review/' + id,
+      url: 'http://localhost:5000/api/protected/delete_comment/' + id,
       headers: {
         'Authorization': localStorage.getItem('jwt'),
       },
     }).then(res => {
-      var temporaryReviewsArray = [];
-      temporaryReviewsArray = res.data;
+      var temporaryCommentsArray = [];
+      temporaryCommentsArray = res.data;
 
-      setReviews(temporaryReviewsArray.reverse());
+      setComments(temporaryCommentsArray.reverse());
     });
   }
 
-  const Reviews = (props) => {
-    let isUsersReview = false;
-    if (props.review.movieId === props.movie.id) {
-      if (props.review.userId === userId) {
-        isUsersReview = true;
+  const Comments = (props) => {
+    let isUsersComment = false;
+    if (props.comment.movieId === props.movie.id) {
+      if (props.comment.userId === userId) {
+        isUsersComment = true;
       }
       return (
-        <Card key={props.review.key} className="review-card">
+        <Card key={props.comment.key} className="comment-card">
           <Card.Body style={{
             position: "relative"
           }}>
             <div className="row">
               <div className="col-sm-12">
-                <h6>{props.review.username} {props.review.date}</h6>
+                <h6>{props.comment.username} {props.comment.date}</h6>
               </div>
             </div>
             <div className="row">
               <div className="col-sm-12">
-                <p>{props.review.review}</p>
+                <p>{props.comment.comment}</p>
               </div>
             </div>
-            {isUsersReview && <HighlightOffRoundedIcon style={{
+            {isUsersComment && <HighlightOffRoundedIcon style={{
               cursor: "pointer",
               fontSize: "2.5em",
               color: "red",
@@ -189,23 +172,22 @@ export default function MovieModal(props) {
               top: "5px",
               right: "5px",
 
-            }} onClick={() => deleteReview(props.review._id)} />}
-
+            }} onClick={() => deleteComment(props.comment._id)} />}
           </Card.Body>
         </Card>);
     } else {
       return null;
     }
   }
-  const reviewCountUpdate = () => {
+  const commentCountUpdate = () => {
     let count = 0;
-    for (var reviewIndex = 0; reviewIndex < reviews.length; reviewIndex++) {
-      if (reviews[reviewIndex].movieId === props.movie.id) {
+    for (var commentIndex = 0; commentIndex < comments.length; commentIndex++) {
+      if (comments[commentIndex].movieId === props.movie.id) {
 
         count++;
       }
     }
-    return (<label htmlFor="review"><b>{count} Review(s)</b></label>
+    return (<label htmlFor="comment"><b>{count} Comment(s)</b></label>
     );
   }
   const onSubmit = async (e) => {
@@ -213,21 +195,20 @@ export default function MovieModal(props) {
     try {
       e.preventDefault();
       e.target.reset();
-      console.log(userReview);
+      console.log(userComment);
       await Axios({
         method: 'post',
-        url: 'http://localhost:5000/api/protected/addReview',
+        url: 'http://localhost:5000/api/protected/addComment',
         headers: {
           'Authorization': localStorage.getItem('jwt'),
         },
         data: {
           "movieId": props.movie.id,
-          "review": userReview
-
+          "comment": userComment
         }
       }).then(res => {
-        setReviews([res.data, ...reviews]);
-        setUserReview("");
+        setComments([res.data, ...comments]);
+        setUserComment("");
       });
     } catch (err) {
       // err.response.data.Error && setError(err.response.data.Error);
@@ -313,18 +294,18 @@ export default function MovieModal(props) {
             <img className="moviePoster movie-card modal-img" key={props.movie.key} src={props.movie.poster_path ? "https://image.tmdb.org/t/p/original" + props.movie.poster_path : require("../Assets/no_poster.jpg")} width="200px" height="300px" alt="movie poster"></img>
           </div>
         </div>
-        <form onSubmit={onSubmit} className="form-review" style={{
+        <form onSubmit={onSubmit} className="form-comment" style={{
           justifyContent: "center",
           display: "flex",
           alignItems: "center",
           flexDirection: "column"
         }}>
           <div className="form-group">
-            {reviewCountUpdate()}
+            {commentCountUpdate()}
 
             <Form.Control style={{
               width: "400px"
-            }} as="textarea" rows="2" placeholder="Add a review" onChange={(e) => setUserReview(e.target.value)} />
+            }} as="textarea" rows="2" placeholder="Add a comment" onChange={(e) => setUserComment(e.target.value)} />
           </div>
           <button style={{
             display: "flex",
@@ -340,7 +321,7 @@ export default function MovieModal(props) {
             fontWeight: 600
           }}>Post</button>
         </form>
-        {reviews.map(currentReview => <Reviews review={currentReview} key={currentReview._id} movie={props.movie} />)}
+        {comments.map(currentComment => <Comments comment={currentComment} key={currentComment._id} movie={props.movie} />)}
       </Modal.Body>
       <Modal.Footer style={{
         justifyContent: "center"
