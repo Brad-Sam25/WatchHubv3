@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../components/component.css';
+import '../components/style.css';
 
 import { Button, Card } from 'react-bootstrap';
 import Axios from 'axios';

@@ -3,7 +3,7 @@ import React,{useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route ,Switch,Redirect} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import './App.css';
+import './components/style.css';
 import Login from "./components/Login";
 import UserContext from "./context/user.context";
  import MovieApp from "./components/Home";
