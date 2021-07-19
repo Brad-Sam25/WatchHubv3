@@ -7,7 +7,6 @@ import './components/style.css';
 import Login from "./components/Login";
 import UserContext from "./context/user.context";
  import MovieApp from "./components/Home";
-//  import HomePage from "./components/home-page.component";
  import Navbar from "./components/NavBar";
  import Register from "./components/Register";
 import FavoritePage from './components/Favorite';
@@ -36,7 +35,6 @@ function App() {
           <Switch>
           <Route path="/" exact component={Login} />
 
-          {/* <Route path= "/login" exact component={Login} /> */}
           <Route path="/register" exact component={Register}/>
 
           <Route path="/app" exact component={MovieApp}/>

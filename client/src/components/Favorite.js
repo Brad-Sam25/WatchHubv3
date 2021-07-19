@@ -50,27 +50,7 @@ export default function FavoritePage(props) {
         });
       }
     const Movie = (props) => ((
-        // <Card className="favorite-card">
-        //     <Card.Body>
-
-        //         <div className="row">
-        //             <div className="col-sm-3">
-        //                 <img className="moviePoster movie-card" key={props.movie.key} src={props.movie.posterPath ? "https://image.tmdb.org/t/p/original" + props.movie.posterPath : require("../Assets/no_poster.jpg")} width="210px" height="310px" alt="movie poster" ></img>
-        //                 <div className="row">
-        //                     <div className="col-sm-12">
-        //                         <p><b>{props.movie.title}</b></p>
-        //                     </div>
-        //                 </div>
-        //             </div>
-        //             <div className="col-sm-7">
-        //                 <p>{props.movie.description}</p>
-        //             </div>
-        //             <div className="col-sm-2">
-        //             <Button  onClick={()=>{removeFavorite(props.movie.movieId)}} variant="outline-dark">Remove</Button>
-        //             </div>
-        //         </div>
-        //     </Card.Body>
-        // </Card>
+        
         <div style={{
             cursor: "pointer"
         }}onClick={()=>{removeFavorite(props.movie.movieId)}}>

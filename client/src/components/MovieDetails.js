@@ -13,7 +13,6 @@ export default function MovieModal(props) {
   const [userId, setUserId] = useState();
 
   useEffect(() => {
-    //creates AbortSignal object.
     const ac = new AbortController();
 
     const isFavoriteFound = async () => {
@@ -37,7 +36,6 @@ export default function MovieModal(props) {
 
     }
     isFavoriteFound();
-    //aborts async tasks
     return () => ac.abort();
   });
   useEffect(() => {
@@ -99,7 +97,6 @@ export default function MovieModal(props) {
 
 
     if (isFavoriteMovieFound) {
-      // console.log(isFavoriteFound()+" in if");
       return (
         <Button onClick={() => removeFavorite()}>Remove from Favorites</Button>
 
@@ -250,7 +247,6 @@ export default function MovieModal(props) {
 
 
     } catch (err) {
-      // err.response.data.Error && setError(err.response.data.Error);
 
     }
   }
@@ -353,7 +349,6 @@ export default function MovieModal(props) {
             }} as="textarea" rows="2" placeholder="Add a review" onChange={(e) => setUserReview(e.target.value)} />
           </div>
 
-          {/* <button className="btn btn-lg btn-primary btn-block text-uppercase review-btn" type="submit" disabled={userReview<=0}>Post</button> */}
           <button style={{
             display: "flex",
             justifyContent: "center",
