@@ -1,75 +1,53 @@
+
+import React,{useState, useEffect} from 'react';
+import { BrowserRouter as Router, Route ,Switch,Redirect} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+
 import './App.css';
-import Landing from './components/pages/Landing';
-import NavBar from './components/NavBar';
-import Footer from './components/Footer';
-import Login from './components/Login'
-import Signup from './components/Signup'
-import { BrowserRouter as Router, Route } from "react-router-dom";
-import Related from './components/Related';
-import { 
-  ApolloClient,
-  ApolloProvider,  
-  InMemoryCache,
-  createHttpLink, 
-} from '@apollo/client';
-import axios from 'axios';
-import React, {useState} from 'react';
-
-
-import { setContext } from '@apollo/client/link/context';
-import { Navbar } from 'react-bulma-components';
-const httpLink = createHttpLink({
-  uri: '/graphql',
-});
- 
-
-const authLink = setContext((_, { headers }) => {
-  const token = localStorage.getItem('id_token');
-
-  return {
-    headers: {
-      ...headers,
-      authorization: token ? `Bearer ${token}` : '',
-    },
-  };
-});
-
-const client = new ApolloClient({
-  link: authLink.concat(httpLink),
-  cache: new InMemoryCache(),
-});
+import Login from "./components/Login";
+import UserContext from "./context/user.context";
+ import MovieApp from "./components/Home";
+//  import HomePage from "./components/home-page.component";
+ import Navbar from "./components/NavBar";
+ import Register from "./components/Register";
+import FavoritePage from './components/Favorite';
 
 function App() {
-  // const getMovie = () => {
-  //   axios.get("https://www.omdbapi.com/?s=Jaws&apikey=a9fe69df").then((res) => {
-  //     console.log(res)
-  //   })
-  //   const tmdbMovie = () => {
-  //     axios.get("https://api.themoviedb.org/3/movie/")
-  //   }
-  //   const getWatch =() => {
-  //     axios.get("https://api.watchmode.com/v1/search/?apiKey=wGpBK9KbIsOowJePtOn6fJGwwZf9FCMKpREucZEI&search_field=name&search_value=Jaws").then((res) => {
-  //       console.log(res)
-  //     })
-  //   }
-  //   getWatch()
-  // }
+  const [userData,setUserData]=useState({
+      token:undefined,
+      user:undefined,
+  });
+  const [loggedIn, setLoggedIn] = useState();
+
+
+  useEffect(()=>{
+    setLoggedIn(localStorage.getItem('jwt'));
+    
+  },[]);
+  
+ 
   return (
-    <ApolloProvider client={client}>
-        <Router>
-          <div>
-            {/* <NavBar /> */}
-            <Route exact path="/" component={Login} />
-            <Route exact path="/home" component={Landing} />
-            <Route exact path="/signup" component={Signup} />
-            {/* <Stats />
-            <Landing />
-            <Footer /> */}
-          </div>
-        </Router>
-    </ApolloProvider>
+
+    <Router>
+      <UserContext.Provider value={{userData,setUserData}}>
+        <div className="container-fluid">
+    <Navbar isAuthenticated={loggedIn}/>
+
+          <Switch>
+          <Route path="/" exact component={Login} />
+
+          {/* <Route path= "/login" exact component={Login} /> */}
+          <Route path="/register" exact component={Register}/>
+
+          <Route path="/app" exact component={MovieApp}/>
+          <Route path="/favorites" exact component={FavoritePage}/>
+          <Redirect to="/app" exact component={MovieApp}/>
+
+          </Switch>
+        </div>
+      </UserContext.Provider>
+    </Router>
   );
 }
-
 
 export default App;

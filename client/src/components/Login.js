@@ -1,89 +1,78 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
+import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import '../App.css';
+import Axios from 'axios';
 
-const Login = (props) => {
-    const [formState, setFormState] = useState({ email: '', password: '' });
-    const [login, { error, data }] = useMutation(LOGIN_USER);
-  
-    const handleChange = (event) => {
-      const { name, value } = event.target;
-  
-      setFormState({
-        ...formState,
-        [name]: value,
-      });
-    };
-  
-    const handleFormSubmit = async (event) => {
-      event.preventDefault();
-      console.log(formState);
-      try {
-        const { data } = await login({
-          variables: { ...formState },
-        });
-  
-        Auth.login(data.login.token);
-      } catch (e) {
-        console.error(e);
-      }
-  
-      setFormState({
-        email: '',
-        password: '',
-      });
-    };
+// import ErrorModal from '../components/error-modal.component';
+
+export default function Login() {
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
+    const [error, setError] = useState();
+    const [modalShow, setModalShow] = useState(false);
+
+    useEffect(() => {
+        const checkLoggedIn = async () => {
+            if (localStorage.getItem('jwt')) {
+                Axios({
+                    method: 'get',
+                    url: 'http://localhost:5000/api/users/isAuthenticated',
+                    headers: {
+                        'Authorization': localStorage.getItem('jwt'),
+                    }
+                }).then(res => {
+                    window.location = '/app';
+
+                }).catch(err => {
+                    window.location = '/login';
+                    localStorage.removeItem('jwt');
+
+                });
+            }
+        }
+        checkLoggedIn();
+
+
+    }, []);
+    const onSubmit = async (e) => {
+
+        try {
+            e.preventDefault();
+
+            const loginUser = {
+                username,
+                password,
+
+            }
+            const loginRes = await Axios.post("http://localhost:5000/api/users/login", loginUser);
+
+            localStorage.setItem('jwt', loginRes.data.token);
+            console.log(loginRes.data.payload);
+
+            console.log(loginRes.data.token);
+            window.location = '/app';
+        } catch (err) {
+            setError(err.response.data.Error);
+            setModalShow(true);
+        }
+    }
+
     return (
-      <main className="flex-row justify-center mb-4">
-      <div className="col-12 col-lg-10">
-        <div className="card">
-          <h4 className="card-header bg-dark text-light p-2">Login</h4>
-          <div className="card-body">
-            {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
-            ) : (
-              <form onSubmit={handleFormSubmit}>
-                <input
-                  className="form-input"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
-                  onChange={handleChange}
-                />
-                <input
-                  className="form-input"
-                  placeholder="******"
-                  name="password"
-                  type="password"
-                  value={formState.password}
-                  onChange={handleChange}
-                />
-                <button
-                  className="btn btn-block btn-info"
-                  style={{ cursor: 'pointer' }}
-                  type="submit"
-                >
-                  Submit
-                </button>
-              </form>
-            )}
 
-            {error && (
-              <div className="my-3 p-3 bg-danger text-white">
-                {error.message}
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </main>
+      
+
+                
+                    <div class="login">
+                        <h1>Watch Hub</h1>
+                        <form onSubmit={onSubmit} className="form-signin">
+                            <input type="text" className="form-control" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+                            <input type="password" className="form-control" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                            <button type="submit" class="btn btn-primary btn-block btn-large">Start Watching</button>
+                            <div class="login-help">
+                                <Link to="/register" >Register</Link>          </div>
+                        </form>
+                    </div>
+                
+
     );
 }
-
-export default Login;

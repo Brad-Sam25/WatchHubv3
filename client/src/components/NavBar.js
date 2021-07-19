@@ -1,34 +1,66 @@
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
+import '../App.css';
+import UserContext from "../context/user.context";
+import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
+import { Navbar, Nav } from 'react-bootstrap';
+import './component.css';
 
-function NavBar() {
+export default function Login(props) {
+
+    const { setUserData } = useContext(UserContext);
+    const logout = () => {
+        setUserData({
+            token: undefined,
+            user: undefined,
+        });
+        localStorage.removeItem("jwt");
+        window.location = '/';
+
+    };
+
     return (
-        <div className="NavBar">
-            <header>
-                <section id="headerRow" className="hero is-small">
-                    <div className="hero-body is-flex is-justify-content-space-between">
-                        <div className="titlelogo is-inline-flex">
-                            <i className="fas fa-video mt-2"></i>
-                            <p className="title mt-4 ml-3" id="watchhub">
-                                Watch Hub
-                            </p>
-                        </div>
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" className="nav-bar"
+        style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "80px",
+            justifyContent: "space-between"
+        }}
+        >
 
-                        <div className="col-md-6 col-md-offset-3 is-justify-content-space-between">
+            <Navbar.Brand href={props.isAuthenticated ? "/app" : "/"} style={{
+                flexDirection: "row",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+            }}>
+                <VideocamRoundedIcon style={{
+                    fontSize: "48px",
+                    color: "white"
+                }}/>
+                <p style={{
+                    marginBlock: "0px"
+                }}>WatchHub</p>
+            </Navbar.Brand>
+            
+            <Nav
+            style={{
+                justifyContent: "flex-end"
+            }}
+            >
+                {!props.isAuthenticated && <Link to="/" className="nav-link">Sign in</Link>}
+                {!props.isAuthenticated && <Link to="/register" className="nav-link">Register</Link>}
+                {props.isAuthenticated && <Link to="/favorites" className="nav-link" style={{color: "white"}}>Favorites</Link>}
+                {props.isAuthenticated && <Link to="/" className="nav-link" onClick={logout} style={{color: "white"}}>Sign Out</Link>}
+            </Nav>
 
-                            <h2 className="mb-1">Welcome  <span className="member-name"></span>!</h2>
-                            <a
-                                href="/logout"
-                                id="gitlink"
-                                className="navbar-brand"
-                            >
-                                Logout
-                            </a>
-                        </div>
-                    </div>
-                </section>
-            </header>
-        </div>
+        </Navbar>
+
+
     );
+
+
 }
-
-
-export default NavBar;
