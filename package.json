@@ -12,16 +12,19 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Brad-Sam25/WatchHubv3.git"
+    "url": "git+https://github.com/steamjgrube/WatchHubv3.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Brad-Sam25/WatchHubv3/issues"
+    "url": "https://github.com/steamjgrube/WatchHubv3/issues"
   },
-  "homepage": "https://github.com/Brad-Sam25/WatchHubv3#readme",
+  "homepage": "https://github.com/steamjgrube/WatchHubv3#readme",
   "devDependencies": {
     "concurrently": "^6.2.0"
+  },
+  "dependencies": {
+    "react-scripts": "^4.0.3"
   }
 }
