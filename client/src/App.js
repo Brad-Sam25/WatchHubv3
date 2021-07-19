@@ -12,6 +12,9 @@ import {
   InMemoryCache,
   createHttpLink, 
 } from '@apollo/client';
+import axios from 'axios';
+import React, {useState} from 'react';
+
 
 import { setContext } from '@apollo/client/link/context';
 import { Navbar } from 'react-bulma-components';
@@ -37,6 +40,20 @@ const client = new ApolloClient({
 });
 
 function App() {
+  // const getMovie = () => {
+  //   axios.get("https://www.omdbapi.com/?s=Jaws&apikey=a9fe69df").then((res) => {
+  //     console.log(res)
+  //   })
+  //   const tmdbMovie = () => {
+  //     axios.get("https://api.themoviedb.org/3/movie/")
+  //   }
+  //   const getWatch =() => {
+  //     axios.get("https://api.watchmode.com/v1/search/?apiKey=wGpBK9KbIsOowJePtOn6fJGwwZf9FCMKpREucZEI&search_field=name&search_value=Jaws").then((res) => {
+  //       console.log(res)
+  //     })
+  //   }
+  //   getWatch()
+  // }
   return (
     <ApolloProvider client={client}>
         <Router>

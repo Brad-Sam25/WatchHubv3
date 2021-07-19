@@ -106,10 +106,3 @@ export default {
         
     },
 };
-
-
-
-// export default {
-//     search(query) {
-//         return axios.get()
-// }
