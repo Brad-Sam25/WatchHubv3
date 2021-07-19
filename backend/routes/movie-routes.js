@@ -7,7 +7,7 @@ const axios = require('axios');
 
 
 router.get('/getUserId', async (req, res) => {
-  
+
   return res.json(req.user._id);
 
 });
@@ -20,19 +20,14 @@ router.post('/get_search', async (req, res) => {
     .then(res => { return res });
 
   return res.json(apiRes.data.results);
-
 });
 
 
-
-
 router.post('/get_popular_movies', async (req, res) => {
- 
+
   const apiRes = await axios.get(`${process.env.MOVIE_BASE_URL}discover/movie?api_key=${process.env.MOVIE_API_KEY}&language=en-US&sort_by=popularity.desc`)
     .then(res => { return res });
-
   return res.json(apiRes.data.results);
-
 });
 
 router.get('/favorites', async (req, res) => {
@@ -41,7 +36,7 @@ router.get('/favorites', async (req, res) => {
 });
 
 router.post('/add', async (req, res) => {
-  let { title, movieId,description,posterPath } = req.body;
+  let { title, movieId, description, posterPath } = req.body;
 
   const newMovie = new Movie({
     title,
@@ -50,6 +45,7 @@ router.post('/add', async (req, res) => {
     description,
     posterPath
   });
+
   newMovie.save()
     .then(movie => res.json(movie))
     .catch(err => res.status(400).json({ Error: err }));
@@ -67,9 +63,8 @@ router.delete('/:id', async (req, res) => {
 });
 
 router.post('/isFavoriteFound', async (req, res) => {
-  
-  let { movieId } = req.body;
 
+  let { movieId } = req.body;
 
   const isTaken = await Movie.findOne({ movieId: movieId, userId: req.user._id });
   if (isTaken) {
@@ -82,23 +77,19 @@ router.post('/isFavoriteFound', async (req, res) => {
 router.get('/reviews', async (req, res) => {
   const reviews = await Review.find({});
   return res.json(reviews);
-
 });
 
 router.post('/addReview', async (req, res) => {
-  
-  let { movieId,review } = req.body;
+  let { movieId, review } = req.body;
 
-
-  if (review.length<=0) {
+  if (review.length <= 0) {
     return res.status(400).json({ Error: "Empty review" });
   }
-let date=new Date().toJSON().slice(0,10);
-
+  let date = new Date().toJSON().slice(0, 10);
 
   const newReview = new Review({
-    username:req.user.username,
-    userId:req.user._id,
+    username: req.user.username,
+    userId: req.user._id,
     movieId,
     review,
     date
@@ -115,7 +106,7 @@ router.delete('/delete_review/:id', async (req, res) => {
     return res.status(400).json({ Error: "review not found" });
   }
   const deletedReview = await Review.findByIdAndDelete(reviewToDelete._id);
-  const reviews = await Review.find({ });
+  const reviews = await Review.find({});
   return res.json(reviews);
 });
 

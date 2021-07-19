@@ -10,13 +10,12 @@ export default function MovieApp(props) {
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [modalShow, setModalShow] = useState(false);
     const [pageNumber, setPageNumber] = useState(1);
-   
+
     const [movieApiSource, setMovieApiSource] = useState("POPULAR");
     useEffect(() => {
 
         const checkLoggedIn = async () => {
             if (localStorage.getItem('jwt')) {
-
                 Axios({
                     method: 'get',
                     url: 'http://localhost:5000/api/users/isAuthenticated',
@@ -28,7 +27,6 @@ export default function MovieApp(props) {
                     localStorage.removeItem('jwt');
                 });
             }
-
         }
         checkLoggedIn();
 
@@ -57,7 +55,6 @@ export default function MovieApp(props) {
                 pageNumber
             }
         }).then(res => {
-
             setMovies(res.data);
         });
     }
@@ -104,7 +101,6 @@ export default function MovieApp(props) {
     }
 
     const Movies = (props) => ((
-
         <>
             <button type="button" className="movie-poster-button" onClick={() => imageClick(props.movie)}><img className="moviePoster movie-card" key={props.movie.key} src={props.movie.poster_path ? "https://image.tmdb.org/t/p/original" + props.movie.poster_path : require("../Assets/no_poster.jpg")} width="200px" height="300px" alt="movie poster"></img></button>
         </>
@@ -124,7 +120,7 @@ export default function MovieApp(props) {
                 zIndex: 100
             }}
         >
-           
+
             <MovieModal
                 show={modalShow}
                 onHide={() => setModalShow(false)}
@@ -133,58 +129,58 @@ export default function MovieApp(props) {
             />
 
             <form className="form-add-task">
-            <div style={{
-                height: "150px",
-                width: "100%",
-                backgroundColor: "transparant",
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                flexDirection: 'column'
-            }}>
-                <input style={{
-                    height: '30px',
-                    width: '400px',
-                    paddingLeft: "5px",
-                    paddingRight: "5px",
-                    textAlign: 'left',
-                    borderRadius: "5px",
-                    marginBottom: "15px"
-                }} onChange={(e) => setMovieTitle(e.target.value)}></input>
                 <div style={{
+                    height: "150px",
+                    width: "100%",
+                    backgroundColor: "transparant",
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    backgroundColor: '#343a40',
-                    borderRadius: '8px',
-                    height: '40px',
-                    width: '100px',
-                    cursor: 'pointer'
+                    flexDirection: 'column'
                 }}>
-                    <p style={{
-                        fontSize: '16px',
-                        color: 'white',
-                        fontWeight: 600,
-                        marginBlockStart: '0px',
-                        marginBlockEnd: '0px'
-                    }}
-                        onClick={(e) => onSubmit(e)}
-                    >Search</p>
-                </div>
-            </div>
+                    <input style={{
+                        height: '30px',
+                        width: '400px',
+                        paddingLeft: "5px",
+                        paddingRight: "5px",
+                        textAlign: 'left',
+                        borderRadius: "5px",
+                        marginBottom: "15px"
+                    }} onChange={(e) => setMovieTitle(e.target.value)}></input>
                     <div style={{
-                        height: "100px",
-                        width: "100%",
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
+                        backgroundColor: '#343a40',
+                        borderRadius: '8px',
+                        height: '40px',
+                        width: '100px',
+                        cursor: 'pointer'
                     }}>
-                        <h1 style={{
-                            color: "white",
-                            textShadow: "1px 1px 3px #3b3b3b",
-                            fontWeight: 600
-                        }}>Top Rated Recent Movies</h1>
+                        <p style={{
+                            fontSize: '16px',
+                            color: 'white',
+                            fontWeight: 600,
+                            marginBlockStart: '0px',
+                            marginBlockEnd: '0px'
+                        }}
+                            onClick={(e) => onSubmit(e)}
+                        >Search</p>
                     </div>
+                </div>
+                <div style={{
+                    height: "100px",
+                    width: "100%",
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                }}>
+                    <h1 style={{
+                        color: "white",
+                        textShadow: "1px 1px 3px #3b3b3b",
+                        fontWeight: 600
+                    }}>Top Rated Recent Movies</h1>
+                </div>
 
                 <div className="container card-container"
                     style={{

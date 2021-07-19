@@ -22,8 +22,6 @@ export default function MovieModal(props) {
         url: 'http://localhost:5000/api/protected/isFavoriteFound',
         headers: {
           'Authorization': localStorage.getItem('jwt'),
-
-
         },
         data: {
           movieId: props.movie.id
@@ -122,8 +120,6 @@ export default function MovieModal(props) {
       url: 'http://localhost:5000/api/protected/add',
       headers: {
         'Authorization': localStorage.getItem('jwt'),
-
-
       },
       data: {
         title: props.movie.title,
@@ -131,8 +127,6 @@ export default function MovieModal(props) {
         description: props.movie.overview,
         posterPath: props.movie.poster_path,
       }
-
-
     }).then(res => {
       handleFavorite();
       setFavoriteMovie(true);
@@ -145,28 +139,19 @@ export default function MovieModal(props) {
       url: 'http://localhost:5000/api/protected/' + props.movie.id,
       headers: {
         'Authorization': localStorage.getItem('jwt'),
-
-
       },
-
-
-
     }).then(res => {
       setFavoriteMovie(false);
     });
   }
+
   const deleteReview = async (id) => {
     await Axios({
       method: 'delete',
       url: 'http://localhost:5000/api/protected/delete_review/' + id,
       headers: {
         'Authorization': localStorage.getItem('jwt'),
-
-
       },
-
-
-
     }).then(res => {
       var temporaryReviewsArray = [];
       temporaryReviewsArray = res.data;
@@ -174,6 +159,7 @@ export default function MovieModal(props) {
       setReviews(temporaryReviewsArray.reverse());
     });
   }
+
   const Reviews = (props) => {
     let isUsersReview = false;
     if (props.review.movieId === props.movie.id) {
@@ -186,16 +172,13 @@ export default function MovieModal(props) {
             position: "relative"
           }}>
             <div className="row">
-
               <div className="col-sm-12">
                 <h6>{props.review.username} {props.review.date}</h6>
               </div>
             </div>
             <div className="row">
-
               <div className="col-sm-12">
                 <p>{props.review.review}</p>
-
               </div>
             </div>
             {isUsersReview && <HighlightOffRoundedIcon style={{
@@ -242,22 +225,16 @@ export default function MovieModal(props) {
           "review": userReview
 
         }
-
       }).then(res => {
         setReviews([res.data, ...reviews]);
         setUserReview("");
       });
-
-
     } catch (err) {
       // err.response.data.Error && setError(err.response.data.Error);
-
     }
   }
   console.log("movie", props.movie)
   return (
-
-
     <Modal
       {...props}
       size="lg"
@@ -292,7 +269,6 @@ export default function MovieModal(props) {
           display: "grid",
           gridTemplateColumns: "1fr 1fr"
         }}>
-
           <div style={{
             gridColumn: "1 / span 1",
             display: "grid",
@@ -311,10 +287,10 @@ export default function MovieModal(props) {
               </p>
             </div>
             <div style={{
-               justifyContent: "space-between",
-               display: "flex",
-               alignItems: "center",
-               gridRow: "2 / span 1"
+              justifyContent: "space-between",
+              display: "flex",
+              alignItems: "center",
+              gridRow: "2 / span 1"
             }}>
               <p style={{
                 fontSize: "14px",
@@ -333,12 +309,10 @@ export default function MovieModal(props) {
             justifyContent: "center",
             display: "flex",
             alignItems: "center"
-
           }}>
             <img className="moviePoster movie-card modal-img" key={props.movie.key} src={props.movie.poster_path ? "https://image.tmdb.org/t/p/original" + props.movie.poster_path : require("../Assets/no_poster.jpg")} width="200px" height="300px" alt="movie poster"></img>
           </div>
         </div>
-
         <form onSubmit={onSubmit} className="form-review" style={{
           justifyContent: "center",
           display: "flex",
@@ -352,8 +326,6 @@ export default function MovieModal(props) {
               width: "400px"
             }} as="textarea" rows="2" placeholder="Add a review" onChange={(e) => setUserReview(e.target.value)} />
           </div>
-
-          {/* <button className="btn btn-lg btn-primary btn-block text-uppercase review-btn" type="submit" disabled={userReview<=0}>Post</button> */}
           <button style={{
             display: "flex",
             justifyContent: "center",
@@ -390,7 +362,5 @@ export default function MovieModal(props) {
         }}>Close</p></div>
       </Modal.Footer>
     </Modal>
-
   );
-
 }

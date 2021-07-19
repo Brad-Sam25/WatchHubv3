@@ -2,26 +2,23 @@ const router = require('express').Router();
 let User = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const passport=require('passport');
-router.post('/register', async (req, res) => {
+const passport = require('passport');
 
+router.post('/register', async (req, res) => {
     try {
         let { username, password, confirmPassword } = req.body;
         if (!username || !password || !confirmPassword) {
-            return res.status(400).json({ Error: "Not all fields entered" });
-        }
-        if (username.length < 3) {
-            return res.status(400).json({ Error: "Username is not atleast 3 characters long" });
+            return res.status(400).json({ Error: "Please fill out all fields" });
         }
         if (password.length < 8) {
-            return res.status(400).json({ Error: "Password is not atleast 8 characters long" });
+            return res.status(400).json({ Error: "Password must be at least 8 characters" });
         }
         if (password !== confirmPassword) {
             return res.status(400).json({ Error: "Passwords do not match" });
         }
         const isTaken = await User.findOne({ username: username });
         if (isTaken) {
-            return res.status(400).json({ Error: "Username is taken" });
+            return res.status(400).json({ Error: "This username is already taken" });
         }
         const salt = await bcrypt.genSalt(12);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -39,33 +36,25 @@ router.post('/register', async (req, res) => {
     }
 });
 
-router.get('/isAuthenticated',passport.authenticate('jwt', {session: false}),(req,res)=>{
-
-return res.status(200).json(true);
+router.get('/isAuthenticated', passport.authenticate('jwt', { session: false }), (req, res) => {
+    return res.status(200).json(true);
 });
-// router.get('/isAuthenticated', (req, res) => {
-//     if(req.user){
-//         return res.status(200).json(true);
-//     }else{
-//         return res.status(200).json(false);
-//     }
-    
-// });
-router.get('/isTokenValid',async(req,res)=>{
+
+router.get('/isTokenValid', async (req, res) => {
     console.log(req.data);
     jwt.verify(req.token, process.env.SECRET, (err, token) => {
-        if(err){
-         return res.json(false)
-        }else{
-         return res.json(true);
+        if (err) {
+            return res.json(false)
+        } else {
+            return res.json(true);
         }
-      })
+    })
 });
 router.post('/login', async (req, res) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            return res.status(400).json({ Error: "Not all fields have been entered" });
+            return res.status(400).json({ Error: "Please fill out all fields" });
         }
         User.findOne({ username: username }).then(user => {
             if (!user) {
@@ -82,15 +71,11 @@ router.post('/login', async (req, res) => {
                     return res.status(200).json({ token, payload });
                 } else {
                     return res.status(400).json({ Error: "Invalid Login" });
-
                 }
-
             });
-
         });
     } catch (err) {
         return res.status(500).json({ Error: err });
-
     }
 });
 

@@ -30,18 +30,14 @@ export default function Login() {
             }
         }
         checkLoggedIn();
-
-
     }, []);
     const onSubmit = async (e) => {
-
         try {
             e.preventDefault();
 
             const loginUser = {
                 username,
                 password,
-
             }
             const loginRes = await Axios.post("http://localhost:5000/api/users/login", loginUser);
 
@@ -57,21 +53,16 @@ export default function Login() {
     }
 
     return (
-
-      
-
-                
-                    <div class="login">
-                        <h1>Watch Hub</h1>
-                        <form onSubmit={onSubmit} className="form-signin">
-                            <input type="text" className="form-control" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-                            <input type="password" className="form-control" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                            <button type="submit" class="btn btn-primary btn-block btn-large">Start Watching</button>
-                            <div class="login-help">
-                                <Link to="/register" >Register</Link>          </div>
-                        </form>
-                    </div>
-                
-
+        <div class="login">
+            <h1>Watch Hub</h1>
+            <form onSubmit={onSubmit} className="form-signin">
+                <input type="text" className="form-control" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+                <input type="password" className="form-control" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                <button type="submit" class="btn btn-primary btn-block btn-large">Start Watching</button>
+                <div class="login-help">
+                    <Link to="/register" >Register</Link>
+                </div>
+            </form>
+        </div>
     );
 }

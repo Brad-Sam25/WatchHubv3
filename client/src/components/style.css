@@ -26,8 +26,6 @@ img.moviePoster{
 }
 
 .movie-poster-button:hover {
-
-
   transition-timing-function: ease-out;
 border: 3px solid cyan; 
   transition: 0.25s;
