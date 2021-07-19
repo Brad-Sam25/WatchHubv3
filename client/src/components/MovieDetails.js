@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../components/component.css';
+import '../components/style.css';
 import StarBorderRoundedIcon from '@material-ui/icons/StarBorderRounded';
 import StarRoundedIcon from '@material-ui/icons/StarRounded';
 import HighlightOffRoundedIcon from '@material-ui/icons/HighlightOffRounded';

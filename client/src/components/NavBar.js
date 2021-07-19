@@ -4,7 +4,7 @@ import '../App.css';
 import UserContext from "../context/user.context";
 import VideocamRoundedIcon from '@material-ui/icons/VideocamRounded';
 import { Navbar, Nav } from 'react-bootstrap';
-import './component.css';
+import './style.css';
 
 export default function Login(props) {
 
@@ -27,7 +27,8 @@ export default function Login(props) {
             left: 0,
             width: "100vw",
             height: "80px",
-            justifyContent: "space-between"
+            justifyContent: "space-between",
+            backgroundColor: "transparent"
         }}
         >
 
