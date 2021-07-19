@@ -1,41 +1,26 @@
 {
-  "name": "movie-app",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.5.0",
-    "@testing-library/user-event": "^7.2.1",
-    "axios": "^0.19.2",
-    "bootstrap": "^4.5.1",
-    "react": "^16.13.1",
-    "react-bootstrap": "^1.3.0",
-    "react-dom": "^16.13.1",
-    "react-router-dom": "^5.2.0",
-    "react-scripts": "^3.4.3"
-  },
+  "name": "WatchHubv3",
+  "version": "1.0.0",
+  "description": "Our application is a clean, streamlined search engine for tv show and movie information including featured actors, release date, critic score, plot, related titles, and trailer video based on user input.\r The application utilizes Node.js and Express.js to create a RESTful API, it usesMySQL and Sequelize ORM, and also incorperates user signup and login features.",
+  "main": "index.js",
   "scripts": {
     "start": "react-scripts start",
-    
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "develop": "concurrently \"cd backend && npm run watch\" \"cd client && npm start\""
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Brad-Sam25/WatchHubv3.git"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Brad-Sam25/WatchHubv3/issues"
   },
+  "homepage": "https://github.com/Brad-Sam25/WatchHubv3#readme",
   "devDependencies": {
     "concurrently": "^6.2.0"
   }
