@@ -23,20 +23,11 @@ connection.openUri('open',()=>{
     console.log("Mongo database connection established successfully");
 });
 
-/*
-Only put ,passport.authenticate('jwt',{session:false}) for routes that have to be secured
-*/
 const usersRouter=require('./routes/users');
 app.use('/api/users',usersRouter);
 
 const movieRouter=require('./routes/movie-routes');
 app.use('/api/protected', passport.authenticate('jwt', {session: false}),movieRouter);
-
-
-// a;pp.get('/app',passport.authenticate('jwt', {session: false},{ failureRedirect: "/" }),  function(req, res) {
-//     console.log("it working");
-//     window.location="/app";
-//   });
 
 app.listen(port,()=>{
     console.log('Server is running on port: '+port);

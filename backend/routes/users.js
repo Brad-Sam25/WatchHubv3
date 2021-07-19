@@ -43,14 +43,7 @@ router.get('/isAuthenticated',passport.authenticate('jwt', {session: false}),(re
 
 return res.status(200).json(true);
 });
-// router.get('/isAuthenticated', (req, res) => {
-//     if(req.user){
-//         return res.status(200).json(true);
-//     }else{
-//         return res.status(200).json(false);
-//     }
-    
-// });
+
 router.get('/isTokenValid',async(req,res)=>{
     console.log(req.data);
     jwt.verify(req.token, process.env.SECRET, (err, token) => {
