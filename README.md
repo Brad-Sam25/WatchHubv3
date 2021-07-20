@@ -15,3 +15,5 @@ node index.html
 Then, the user can access the application by entering localhost:8080 into their browswer searchbar. This will bring up the user login page. If the user does not have an existing registered username, they can create one by following the prompted link. Once the user is logged in, they can then enter the title of their favorite tv show or movie to access corresponding information via our backend API calls.
 
 ## Demo: ##
+
+https://drive.google.com/file/d/1bnI4QDSVGI_7tl7jP5X0Y_4czdTEwy1T/view
