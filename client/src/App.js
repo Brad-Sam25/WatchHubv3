@@ -7,7 +7,6 @@ import './components/style.css';
 import Login from "./components/Login";
 import UserContext from "./context/user.context";
 import MovieApp from "./components/Home";
-//  import HomePage from "./components/home-page.component";
 import Navbar from "./components/NavBar";
 import Register from "./components/Register";
 import FavoritePage from './components/Favorite';
@@ -19,12 +18,10 @@ function App() {
   });
   const [loggedIn, setLoggedIn] = useState();
 
-
   useEffect(() => {
     setLoggedIn(localStorage.getItem('jwt'));
 
   }, []);
-
 
   return (
 
@@ -33,13 +30,11 @@ function App() {
         <div className="container-fluid">
           <Navbar isAuthenticated={loggedIn} />
           <Switch>
-
             <Route path="/" exact component={Login} />
             <Route path="/register" exact component={Register} />
             <Route path="/app" exact component={MovieApp} />
             <Route path="/favorites" exact component={FavoritePage} />
             <Redirect to="/app" exact component={MovieApp} />
-
           </Switch>
         </div>
       </UserContext.Provider>

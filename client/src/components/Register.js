@@ -8,7 +8,6 @@ export default function Register() {
     const [password, setPassword] = useState();
     const [confirmPassword, setConfirmPassword] = useState();
     const [error, setError] = useState();
-    const [modalShow, setModalShow] = useState(false);
 
 
     useEffect(() => {
@@ -44,7 +43,6 @@ export default function Register() {
             window.location = '/login';
         } catch (err) {
             setError(err.response.data.Error);
-            setModalShow(true);
         }
     }
 
@@ -52,8 +50,8 @@ export default function Register() {
         <div class="login">
             <h1>Sign up</h1>
             <form onSubmit={onSubmit} class="signup">
-                <input type="text" placeholder="Username" id="name-input" required="required" onChange={(e) => setUsername(e.target.value)} />
-                <input type="password" placeholder="Password" id="password-input" required="required" onChange={(e) => setPassword(e.target.value)} />
+                <input type="text" className="form-control" placeholder="Username" id="name-input" required="required" onChange={(e) => setUsername(e.target.value)} />
+                <input type="password" className="form-control" placeholder="Password" id="password-input" required="required" onChange={(e) => setPassword(e.target.value)} />
                 <input type="password" className="form-control" placeholder="Re-enter Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 <button type="submit" class="btn btn-primary btn-block btn-large">Register</button>
                 <div class="login-help">

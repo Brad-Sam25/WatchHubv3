@@ -8,7 +8,6 @@ export default function Login() {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [error, setError] = useState();
-    const [modalShow, setModalShow] = useState(false);
 
     useEffect(() => {
         const checkLoggedIn = async () => {
@@ -25,7 +24,6 @@ export default function Login() {
                 }).catch(err => {
                     window.location = '/login';
                     localStorage.removeItem('jwt');
-
                 });
             }
         }
@@ -48,7 +46,6 @@ export default function Login() {
             window.location = '/app';
         } catch (err) {
             setError(err.response.data.Error);
-            setModalShow(true);
         }
     }
 
